@@ -31,7 +31,7 @@ public class OAuth2Service {
     @Autowired
     private JWTService jwtService;
 
-    public Map<String, Object> loginWithGoogle(String googleToken) {
+    public String loginWithGoogle(String googleToken) {
         // 1. Verificar token
         Payload payload = googleTokenVerifier.verify(googleToken);
         if (payload == null || !payload.getEmailVerified()) {
@@ -49,11 +49,15 @@ public class OAuth2Service {
         String jwt = jwtService.generateToken(claims);
 
         // 4. Construir respuesta
+        /*
         Map<String, Object> response = new HashMap<>();
         response.put("token", jwt);
         response.put("nombre", usuario.getNombre());
         response.put("email", usuario.getEmail());
-        return response;
+        */
+
+
+        return jwt;
     }
 
     private UsuarioEntity crearUsuarioDesdeGoogle(Payload payload) {

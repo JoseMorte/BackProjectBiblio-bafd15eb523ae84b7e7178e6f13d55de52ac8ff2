@@ -40,10 +40,19 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/google")
+    /*@PostMapping("/google")
     public ResponseEntity<?> googleLogin(@RequestBody Map<String, String> request) {
         String googleToken = request.get("token");
         return ResponseEntity.ok(oAuth2Service.loginWithGoogle(googleToken));
+    }*/
+
+    @PostMapping("google")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<?> googleAuth(@RequestBody Map<String, String> request) {
+    String googleToken = request.get("token");
+    // Verifica el token con Google API
+    // Genera tu JWT
+    return ResponseEntity.ok().body(Map.of("token", oAuth2Service.loginWithGoogle(googleToken)));
     }
 
     @PostMapping("/register")
