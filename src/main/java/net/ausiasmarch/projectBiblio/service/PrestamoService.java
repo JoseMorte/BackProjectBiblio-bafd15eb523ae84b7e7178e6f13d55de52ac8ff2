@@ -78,7 +78,7 @@ public class PrestamoService {
     }
 
     public Page<PrestamoEntity> getPageXUsuario(Optional<Long> idUsuario, Pageable oPageable) {
-        if (oAuthService.isAdmin()) {
+        if (oAuthService.isAdmin() || oAuthService.isContableWithItsOwnData(idUsuario.get())) {
             if (idUsuario.isPresent()) {
             return oPrestamoRepository.findByUsuarioId(idUsuario.get(),oPageable);
             }else{

@@ -74,7 +74,7 @@ public class LibroGenericoService {
     }
 
     public Page<LibroGenericoEntity> getPage(Pageable oPageable) {
-        if (oAuthService.isAdmin()) {
+        if (oAuthService.isAdmin() || oAuthService.isContable() || oAuthService.isAuditor()) {
                 return oLibroGenericoRepository.findAll(oPageable);
         } else {
             throw new UnauthorizedAccessException("No tienes permisos para ver los LibroGenericos");

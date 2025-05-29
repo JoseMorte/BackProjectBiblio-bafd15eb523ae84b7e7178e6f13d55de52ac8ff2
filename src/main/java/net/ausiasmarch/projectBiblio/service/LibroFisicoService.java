@@ -68,7 +68,7 @@ public class LibroFisicoService {
 
 
     public Page<LibroFisicoEntity> getPageLibroFisicoDisponible(Pageable oPageable) {
-        if (oAuthService.isAdmin()) {
+        if (oAuthService.isAdmin() || oAuthService.isContable()) {
             return oLibroFisicoRepository.findByLibroFisicoDisponible(oPageable);
         } else {
             throw new UnauthorizedAccessException("No tienes permisos para ver los LibroFisicos");

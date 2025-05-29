@@ -35,7 +35,10 @@ public class AuthService {
 
     private Map<String, String> getClaims(String email) {
         Map<String, String> claims = new HashMap<>();
+        UsuarioEntity usuario = oUsuarioRepository.findByEmail(email).get();
         claims.put("email", email);
+        claims.put("userId", usuario.getId().toString());
+        claims.put("tipoUsuario", usuario.getTipousuario().getId().toString());
         return claims;
     };
 
@@ -49,7 +52,7 @@ public class AuthService {
         } else {
             String email = oHttpServletRequest.getAttribute("email").toString();
             return oUsuarioRepository.findByEmail(email).get();
-        }                
+        }
     }
 
     public boolean isSessionActive() {
