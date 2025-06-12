@@ -87,10 +87,10 @@ public class PrestamoController {
     
     
 
-    /*@PutMapping("")
+    @PutMapping("")
     public ResponseEntity<PrestamoEntity> update(@RequestBody PrestamoEntity oPrestamoEntity) {
         return new ResponseEntity<PrestamoEntity>(oPrestamoService.update(oPrestamoEntity), HttpStatus.OK);
-    }*/
+    }
 
     /*@DeleteMapping("/all")
     public ResponseEntity<Long> deleteAll() {

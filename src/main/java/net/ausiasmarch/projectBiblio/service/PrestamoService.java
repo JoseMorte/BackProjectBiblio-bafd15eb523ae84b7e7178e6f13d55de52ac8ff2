@@ -68,7 +68,7 @@ public class PrestamoService {
     }
 
     public Page<PrestamoEntity> getPageActivePrestamos(Pageable oPageable) {
-        if (oAuthService.isAdmin()) {
+        if (oAuthService.isAdmin() || oAuthService.isContable()) {
 
             return oPrestamoRepository.findActivePrestamos(oPageable);
         } else {
@@ -78,7 +78,7 @@ public class PrestamoService {
     }
 
     public Page<PrestamoEntity> getPageXUsuario(Optional<Long> idUsuario, Pageable oPageable) {
-        if (oAuthService.isAdmin() || oAuthService.isContableWithItsOwnData(idUsuario.get())) {
+        if (oAuthService.isAdmin() || oAuthService.isContable()) {
             if (idUsuario.isPresent()) {
             return oPrestamoRepository.findByUsuarioId(idUsuario.get(),oPageable);
             }else{
@@ -90,7 +90,7 @@ public class PrestamoService {
     }
 
     public Page<PrestamoEntity> getPageXLibroFisico(Optional<Long> idLibroFisico, Pageable oPageable) {
-        if (oAuthService.isAdmin()) {
+        if (oAuthService.isAdmin() || oAuthService.isContable()) {
             if (idLibroFisico.isPresent()) {
             return oPrestamoRepository.findByLibroFisicoId(idLibroFisico.get(),oPageable);
             }else{
@@ -121,7 +121,7 @@ public class PrestamoService {
     }*/
 
     public PrestamoEntity create(PrestamoEntity oPrestamoEntity) {
-        if (oAuthService.isAdmin()) {
+        if (oAuthService.isAdmin() || oAuthService.isContable()) {
             oPrestamoEntity.getLibroFisico().setEstado(1L);
             return oPrestamoRepository.save(oPrestamoEntity);
         } else {
@@ -129,7 +129,7 @@ public class PrestamoService {
         }
     }
 
-    /*public PrestamoEntity update(PrestamoEntity oPrestamoEntity) {
+    public PrestamoEntity update(PrestamoEntity oPrestamoEntity) {
         if (oAuthService.isContableWithItsOwnData(oPrestamoEntity.getId()) || oAuthService.isAdmin()
                 || oAuthService.isAuditorWithItsOwnData(oPrestamoEntity.getId())) {
             PrestamoEntity oPrestamoEntityFromDatabase = oPrestamoRepository.findById(oPrestamoEntity.getId()).get();
@@ -155,7 +155,7 @@ public class PrestamoService {
         } else {
             throw new UnauthorizedAccessException("No tienes permisos para modificar el Prestamo");
         }
-    }*/
+    }
 
     /*public Long deleteAll() {
         if (!oAuthService.isAdmin()) {
