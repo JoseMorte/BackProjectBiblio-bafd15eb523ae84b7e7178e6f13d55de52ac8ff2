@@ -125,9 +125,6 @@ public class LibroFisicoService {
                         || oAuthService.isAuditorWithItsOwnData(oLibroFisicoEntity.getId())) {
                     LibroFisicoEntity oLibroFisicoEntityFromDatabase = oLibroFisicoRepository
                             .findById(oLibroFisicoEntity.getId()).get();
-                    if (oLibroFisicoEntityFromDatabase.getPrestamos() != 0) {
-                        throw new NotAcceptableException("No se puede editar el LibroFisico porque tiene préstamos realizados");
-                    }
                     if (oLibroFisicoEntity.getCodigoInventario() != null) {
                         oLibroFisicoEntityFromDatabase.setCodigoInventario(oLibroFisicoEntity.getCodigoInventario());
                     }
