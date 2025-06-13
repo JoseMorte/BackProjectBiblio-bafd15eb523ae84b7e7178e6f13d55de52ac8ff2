@@ -7,4 +7,7 @@ import net.ausiasmarch.projectBiblio.entity.LibroGenericoEntity;
 
 public interface LibroGenericoRepository extends JpaRepository<LibroGenericoEntity, Long> {
         Page<LibroGenericoEntity> findByTipolibroId(Long idTipolibro, Pageable oPageable);
+
+        Page<LibroGenericoEntity> findByTituloContaining(
+        Pageable oPageable, String filter);
 }

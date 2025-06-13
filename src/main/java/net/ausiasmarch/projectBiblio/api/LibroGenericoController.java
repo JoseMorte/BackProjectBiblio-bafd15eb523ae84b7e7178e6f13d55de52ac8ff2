@@ -40,7 +40,7 @@ public class LibroGenericoController {
     public ResponseEntity<Page<LibroGenericoEntity>> getPage(
             Pageable oPageable,
             @RequestParam  Optional<String> filter) {
-        return new ResponseEntity<Page<LibroGenericoEntity>>(oLibroGenericoService.getPage(oPageable), HttpStatus.OK);
+        return new ResponseEntity<Page<LibroGenericoEntity>>(oLibroGenericoService.getPage(oPageable, filter), HttpStatus.OK);
     }
 
     @GetMapping("/xtipoLibro/{id}")
