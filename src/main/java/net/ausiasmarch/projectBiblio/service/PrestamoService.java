@@ -44,7 +44,7 @@ public class PrestamoService {
     }
 
     public PrestamoEntity get(Long id) {
-        if (oAuthService.isContableWithItsOwnData(id) || oAuthService.isAdmin()
+        if (oAuthService.isContable() || oAuthService.isAdmin()
                 || oAuthService.isAuditorWithItsOwnData(id)) {
             Optional<PrestamoEntity> Prestamo = oPrestamoRepository.findById(id);
             if (Prestamo.isPresent()) {
