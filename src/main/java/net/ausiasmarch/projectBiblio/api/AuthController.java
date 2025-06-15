@@ -46,8 +46,7 @@ public class AuthController {
         return ResponseEntity.ok(oAuth2Service.loginWithGoogle(googleToken));
     }*/
 
-    @PostMapping("google")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/google") 
     public ResponseEntity<?> googleAuth(@RequestBody Map<String, String> request) {
     String googleToken = request.get("token");
     // Verifica el token con Google API

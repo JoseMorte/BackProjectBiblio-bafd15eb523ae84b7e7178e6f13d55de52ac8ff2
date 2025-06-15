@@ -19,15 +19,15 @@ import net.ausiasmarch.projectBiblio.repository.UsuarioRepository;
 @Service
 public class OAuth2Service {
 
-   @Autowired
+    @Autowired
     private GoogleTokenVerifier googleTokenVerifier;
-    
+
     @Autowired
     private UsuarioRepository usuarioRepository;
-    
+
     @Autowired
     private TipoUsuarioRepository tipousuarioRepository;
-    
+
     @Autowired
     private JWTService jwtService;
 
@@ -39,39 +39,52 @@ public class OAuth2Service {
         }
         // 2. Obtener o crear usuario
         UsuarioEntity usuario = usuarioRepository.findByEmail(payload.getEmail())
-            .orElseGet(() -> crearUsuarioDesdeGoogle(payload));
+                .orElseGet(() -> crearUsuarioDesdeGoogle(payload));
 
         // 3. Generar JWT
         Map<String, String> claims = new HashMap<>();
         claims.put("email", usuario.getEmail());
         claims.put("tipoUsuario", String.valueOf(usuario.getTipousuario().getId()));
-        
+
         String jwt = jwtService.generateToken(claims);
 
         // 4. Construir respuesta
         /*
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", jwt);
-        response.put("nombre", usuario.getNombre());
-        response.put("email", usuario.getEmail());
-        */
-
+         * Map<String, Object> response = new HashMap<>();
+         * response.put("token", jwt);
+         * response.put("nombre", usuario.getNombre());
+         * response.put("email", usuario.getEmail());
+         */
 
         return jwt;
     }
 
     private UsuarioEntity crearUsuarioDesdeGoogle(Payload payload) {
         UsuarioEntity nuevoUsuario = new UsuarioEntity();
+
         nuevoUsuario.setNombre((String) payload.get("name"));
-        nuevoUsuario.setApellido1((String) payload.get("family_name"));
-        nuevoUsuario.setApellido2((String) payload.get("given_name"));
-        nuevoUsuario.setPassword(null); // No se establece la contraseña al ser autenticación externa
+
+        // ⚠️ Verifica que no venga null
+        String apellido1 = (String) payload.get("family_name");
+        if (apellido1 == null || apellido1.isBlank()) {
+            apellido1 = " ";
+        }
+        nuevoUsuario.setApellido1(apellido1);
+
+        String apellido2 = (String) payload.get("given_name");
+        if (apellido2 == null || apellido2.isBlank()) {
+            apellido2 = " ";
+        }
+        nuevoUsuario.setApellido2(apellido2);
+
         nuevoUsuario.setEmail(payload.getEmail());
+        nuevoUsuario.setPassword(null);
+
         nuevoUsuario.setTipousuario(
-            tipousuarioRepository.findById(2L) // ID del rol por defecto
-                .orElseThrow(() -> new ResourceNotFoundException("Rol no encontrado"))
-        );
+                tipousuarioRepository.findById(2L)
+                        .orElseThrow(() -> new ResourceNotFoundException("Rol no encontrado")));
+
         return usuarioRepository.save(nuevoUsuario);
     }
-}
 
+}
