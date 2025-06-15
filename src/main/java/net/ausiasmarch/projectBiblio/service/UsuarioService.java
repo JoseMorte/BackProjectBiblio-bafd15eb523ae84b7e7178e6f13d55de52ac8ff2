@@ -52,7 +52,7 @@ public class UsuarioService {
             oUsuarioEntity.setEmail(
                     "email" + oUsuarioEntity.getNombre() + oRandomService.getRandomInt(999, 9999) + "@gmail.com");
             oUsuarioEntity.setPassword("");
-            oUsuarioEntity.setTipousuario(oTipoUsuarioService.randomSelection());
+            oUsuarioEntity.setTipousuario(oTipoUsuarioService.get(2L));
             oUsuarioRepository.save(oUsuarioEntity);
         }
         return oUsuarioRepository.count();

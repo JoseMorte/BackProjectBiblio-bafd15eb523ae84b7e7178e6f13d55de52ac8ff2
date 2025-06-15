@@ -21,10 +21,8 @@ public class DatabaseService {
 
     public Long fillDb(){
 
-        oUsuarioService.randomCreate(10L);
         oLibroGenericoService.randomCreate(10L);
         oLibroFisicoService.randomCreate(10L);
-        oPrestamoService.randomCreate(10L);
 
         return 0L;
     }

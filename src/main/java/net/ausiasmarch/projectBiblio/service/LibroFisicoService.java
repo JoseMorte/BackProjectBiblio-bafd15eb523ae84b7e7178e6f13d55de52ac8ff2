@@ -38,7 +38,7 @@ public class LibroFisicoService {
             LibroFisicoEntity oLibroFisicoEntity = new LibroFisicoEntity();
             oLibroFisicoEntity.setCodigoInventario(Long.valueOf(oRandomService.getRandomInt(999, 9999)));
             oLibroFisicoEntity.setLibroGenerico(oLibroGenericoService.randomSelection());
-            oLibroFisicoEntity.setEstado(Long.valueOf(oRandomService.getRandomInt(0,1)));
+            oLibroFisicoEntity.setEstado(Long.valueOf(0));
             oLibroFisicoRepository.save(oLibroFisicoEntity);
         }
         return oLibroFisicoRepository.count();
