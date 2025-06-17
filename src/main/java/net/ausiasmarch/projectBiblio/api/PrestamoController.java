@@ -92,6 +92,11 @@ public class PrestamoController {
         return new ResponseEntity<PrestamoEntity>(oPrestamoService.update(oPrestamoEntity), HttpStatus.OK);
     }
 
+    @PutMapping("/activePrestamos")
+    public ResponseEntity<PrestamoEntity> updateActivePrestamo(@RequestBody PrestamoEntity oPrestamoEntity) {
+        return new ResponseEntity<PrestamoEntity>(oPrestamoService.update(oPrestamoEntity), HttpStatus.OK);
+    }
+
     /*@DeleteMapping("/all")
     public ResponseEntity<Long> deleteAll() {
         return new ResponseEntity<Long>(oPrestamoService.deleteAll(), HttpStatus.OK);
